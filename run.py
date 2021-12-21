@@ -34,6 +34,7 @@ if __name__ == "__main__":
     for folder in doc_folders:
         # path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
         path = os.path.join(docs_folder, folder)
+        progress_bar.set_postfix_str(f'Processing {path}')
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
         text_sents = []
