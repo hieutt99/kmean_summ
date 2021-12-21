@@ -55,7 +55,8 @@ class Summarizer(object):
         return indexs
 
     def kmean_summarizer(self, sentences, text_sents, org_sents, last_indexs, n_clusters=30):
-        model = Word2Vec(text_sents, min_count=1, size=256, cbow_mean=1)
+        print(text_sents)
+        model = Word2Vec(sentences=text_sents, min_count=1, size=256, cbow_mean=1)
 
         X = []
         for sent in text_sents:
