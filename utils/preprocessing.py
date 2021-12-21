@@ -13,8 +13,10 @@ class Preprocessing(object):
 	def processFile(self, file_path_and_name):
 		try:
 
-			f = open(file_path_and_name, 'r')
-			text_0 = f.read()
+			# f = open(file_path_and_name, 'r')
+			# text_0 = f.read()
+			with open(file_path_and_name, 'r', encoding='utf-8') as fp:
+				text_0 = fp.read()
 
 			# text_1 = re.search(r"<TEXT>.*</TEXT>", text_0, re.DOTALL)
 			# text_1 = re.sub("<TEXT>\n", "", text_1.group(0))
