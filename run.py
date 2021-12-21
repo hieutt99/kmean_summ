@@ -26,7 +26,7 @@ if __name__ == "__main__":
         os.makedirs(path_to_save)
 
     for folder in doc_folders:
-        path = os.path.join(root_directory + "Data/summ/Documents/", '') + folder
+        path = os.path.join(root_directory,"Data", "summ," "Documents", folder)
         print (path)
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
@@ -48,5 +48,6 @@ if __name__ == "__main__":
 
         summary = summarizer.summary(sentences, text_sents, org_sents, last_indexs)
 
-        with open(path_to_save + folder + ".me", 'w') as fileOut:
+        path = os.path.join(path_to_save, f"{folder}.txt")
+        with open(path, 'w', encoding='utf-8') as fileOut:
             fileOut.write("\n".join(summary))
