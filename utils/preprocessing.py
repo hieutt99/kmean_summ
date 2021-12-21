@@ -38,7 +38,8 @@ class Preprocessing(object):
 			# text_1 = re.sub(r"\(AP\) _", " ", text_1)
 			# text_1 = re.sub("&\w+;", " ", text_1)
 			
-			text_1 = text_0.translate(text_0.maketrans(rep, string.punctuation))
+			# text_1 = text_0.translate(text_0.maketrans(rep, string.punctuation))
+			text_1 = text_0
 
 			# lines = sent_tokenizer.tokenize(text_1.strip())
 
