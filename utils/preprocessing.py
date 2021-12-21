@@ -36,6 +36,7 @@ class Preprocessing(object):
 
 			sents = sent_tokenize(text_1.strip())
 			sents = [word_tokenize(item, format='text') for item in sents]
+			print(sents)
 			sentences = [Sentence(file_path_and_name, item, item) for item in sents]
 
 
