@@ -3,6 +3,7 @@ from definitions import ROOT_DIR
 from methods.main_method.Kmeans_CentroidBase_MMR_SentencePosition import Summarizer
 import argparse
 from utils.preprocessing import Preprocessing
+from tqdm.auto import tqdm 
 
 
 if __name__ == "__main__":
@@ -10,7 +11,7 @@ if __name__ == "__main__":
 
     doc_folders = os.listdir(root_directory + "Data/summ/Documents")
 
-    summarizer = Summarizer(n_clusters=30
+    summarizer = Summarizer(n_clusters=20
                             , len_summary=16)
 
     parser = argparse.ArgumentParser()
@@ -25,9 +26,11 @@ if __name__ == "__main__":
     if not os.path.exists(path_to_save):
         os.makedirs(path_to_save)
 
+    progress_bar = tqdm(range(len(doc_folders)))
+    progress_bar.set_description("Running: ")
     for folder in doc_folders:
         path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
-        print (path)
+        progress_bar.set_postfix_str(f'Processing {path}')
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
         text_sents = []
@@ -51,3 +54,7 @@ if __name__ == "__main__":
         path = os.path.join(path_to_save, f"{folder}.txt")
         with open(path, 'w', encoding='utf-8') as fileOut:
             fileOut.write("\n".join(summary))
+
+        progress_bar.update(1)
+
+    progress_bar.close()
