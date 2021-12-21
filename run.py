@@ -30,7 +30,6 @@ if __name__ == "__main__":
     progress_bar.set_description("Running: ")
     for folder in doc_folders:
         path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
-        progress_bar.set_postfix_str(f'Processing {path}')
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
         text_sents = []
@@ -49,6 +48,7 @@ if __name__ == "__main__":
             if tmp[-1] not in clean_sents:
                 clean_sents.append(tmp[:-1])
 
+        progress_bar.set_postfix(f'Processing {path} with n_sents={len(text_sents)}')
         summary = summarizer.summary(sentences, text_sents, org_sents, last_indexs)
 
         path = os.path.join(path_to_save, f"{folder}.txt")
