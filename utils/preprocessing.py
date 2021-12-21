@@ -15,10 +15,9 @@ class Preprocessing(object):
 
 			# f = open(file_path_and_name, 'r')
 			# text_0 = f.read()
-			print(file_path_and_name)
+
 			with open(file_path_and_name, 'r', encoding='utf-8') as fp:
 				text_0 = fp.read()
-			print(text_0)
 			# text_1 = re.search(r"<TEXT>.*</TEXT>", text_0, re.DOTALL)
 			# text_1 = re.sub("<TEXT>\n", "", text_1.group(0))
 			# text_1 = re.sub("\n</TEXT>", "", text_1)
@@ -34,13 +33,12 @@ class Preprocessing(object):
 
 			text_1 = re.sub(r"\(AP\) _", " ", text_1)
 			text_1 = re.sub("&\w+;", " ", text_1)
-			print(text_1)
 
 			# lines = sent_tokenizer.tokenize(text_1.strip())
 
 			sents = sent_tokenize(text_1.strip())
 			sents = [word_tokenize(item, format='text') for item in sents]
-			print(sents)
+
 			sentences = [Sentence(file_path_and_name, item, item) for item in sents]
 
 
