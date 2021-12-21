@@ -9,16 +9,19 @@ from tqdm.auto import tqdm
 if __name__ == "__main__":
     root_directory = ROOT_DIR + "/"
 
-    doc_folders = os.listdir(root_directory + "Data/summ/Documents")
+    # doc_folders = os.listdir(root_directory + "Data/summ/Documents")
 
     summarizer = Summarizer(n_clusters=10
-                            , len_summary=16)
+                            , len_summary=10)
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--folder_to_save', help='Folder to save summaries')
+    parser.add_argument('--docs_folder')
     args = parser.parse_args()
 
+    docs_folder = args.docs_folder
+    doc_folders = os.listdir(docs_folder)
     folder_to_save = args.folder_to_save
     # path_to_save = root_directory + "Data/summ/" + folder_to_save + "/"
     path_to_save = folder_to_save
@@ -29,7 +32,8 @@ if __name__ == "__main__":
     progress_bar = tqdm(range(len(doc_folders)))
     progress_bar.set_description("Running: ")
     for folder in doc_folders:
-        path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
+        # path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
+        path = os.path.join(docs_folder, folder)
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
         text_sents = []
