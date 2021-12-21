@@ -7,6 +7,9 @@ from utils.sentence import Sentence
 from underthesea import word_tokenize, sent_tokenize
 import string
 
+rep = [' ' for item in string.punctuation]
+rep = ''.join(rep)
+
 class Preprocessing(object):
 	def __init__(self):
 		pass
@@ -34,8 +37,8 @@ class Preprocessing(object):
 
 			# text_1 = re.sub(r"\(AP\) _", " ", text_1)
 			# text_1 = re.sub("&\w+;", " ", text_1)
-
-			text_1 = text_0.translate(text_0.maketrans(' ', string.punctuation))
+			
+			text_1 = text_0.translate(text_0.maketrans(rep, string.punctuation))
 
 			# lines = sent_tokenizer.tokenize(text_1.strip())
 
