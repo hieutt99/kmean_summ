@@ -11,14 +11,18 @@ if __name__ == "__main__":
 
     # doc_folders = os.listdir(root_directory + "Data/summ/Documents")
 
-    summarizer = Summarizer(n_clusters=10
-                            , len_summary=10)
+    
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--folder_to_save', help='Folder to save summaries')
     parser.add_argument('--docs_folder')
+    parser.add_argument('--n_clusters', default=5, type=int)
+    parser.add_argument('--len_summary', default=10, type=int)
     args = parser.parse_args()
+
+    summarizer = Summarizer(n_clusters=args.n_clusters
+                            , len_summary=10)
 
     docs_folder = args.docs_folder
     doc_folders = os.listdir(docs_folder)
