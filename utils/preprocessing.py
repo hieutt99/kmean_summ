@@ -5,6 +5,7 @@ import re
 from utils.sentence import Sentence
 # from nltk import sent_tokenize
 from underthesea import word_tokenize, sent_tokenize
+import string
 
 class Preprocessing(object):
 	def __init__(self):
@@ -24,22 +25,24 @@ class Preprocessing(object):
 
 			# text_1 = re.sub("<P>", "", text_1)
 			# text_1 = re.sub("</P>", "", text_1)
-			text_1 = re.sub("\n", " ", text_0)
-			text_1 = re.sub("\"", "\"", text_1)
-			text_1 = re.sub("''", "\"", text_1)
-			text_1 = re.sub("``", "\"", text_1)
-			text_1 = re.sub(" +", " ", text_1)
-			text_1 = re.sub(" _ ", "", text_1)
+			# text_1 = re.sub("\n", " ", text_0)
+			# text_1 = re.sub("\"", "\"", text_1)
+			# text_1 = re.sub("''", "\"", text_1)
+			# text_1 = re.sub("``", "\"", text_1)
+			# text_1 = re.sub(" +", " ", text_1)
+			# text_1 = re.sub(" _ ", "", text_1)
 
-			text_1 = re.sub(r"\(AP\) _", " ", text_1)
-			text_1 = re.sub("&\w+;", " ", text_1)
+			# text_1 = re.sub(r"\(AP\) _", " ", text_1)
+			# text_1 = re.sub("&\w+;", " ", text_1)
+
+			text_1 = text_0.translate(' ', string.punctuation)
 
 			# lines = sent_tokenizer.tokenize(text_1.strip())
 
-			sents = sent_tokenize(text_1.strip())
-			sents = [word_tokenize(item, format='text') for item in sents]
+			og_sents = sent_tokenize(text_1.strip())
+			sents = [word_tokenize(item, format='text') for item in og_sents]
 
-			sentences = [Sentence(file_path_and_name, item, item) for item in sents]
+			sentences = [Sentence(file_path_and_name, item, og_item) for item, og_item in zip(sents, og_sents)]
 
 
 
