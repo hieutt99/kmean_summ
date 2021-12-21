@@ -1,57 +1,14 @@
 import os
 import re
-import nltk
-porter = nltk.PorterStemmer()
+# import nltk
+# porter = nltk.PorterStemmer()
 from utils.sentence import Sentence
+# from nltk import sent_tokenize
+from underthesea import word_tokenize, sent_tokenize
 
 class Preprocessing(object):
 	def __init__(self):
 		pass
-
-	def processFilev2(self, file_path_and_name):
-		try:
-
-			f = open(file_path_and_name, 'r')
-			text_0 = f.read()
-
-			sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-			lines = sent_tokenizer.tokenize(text_0.strip())
-
-			index = lines[0].find("--")
-			if index != -1:
-				lines[0] = lines[0][index + 2:]
-			index = lines[0].find(" _ ")
-			if index != -1:
-				lines[0] = lines[0][index + 3:]
-			sentences = []
-
-			for sent in lines:
-				sent = sent.strip()
-				OG_sent = sent[:]
-				sent = sent.lower()
-				line = nltk.word_tokenize(sent)
-
-				stemmed_sentence = [porter.stem(word) for word in line]
-				stemmed_sentence = list(filter(lambda x: x != '.' and x != '`' and x != ',' and x != '_' and x != ';'
-														 and x != '(' and x != ')' and x.find('&') == -1
-														 and x != '?' and x != "'" and x != '!' and x != '''"'''
-														 and x != '``' and x != '--' and x != ':'
-														 and x != "''" and x != "'s", stemmed_sentence))
-
-				# stemmed_sentence = [word for word in stemmed_sentence if word not in stopwords.words('english')]
-
-				if (len(stemmed_sentence) <= 4):
-					continue
-
-				if stemmed_sentence:
-					sentences.append(Sentence(file_path_and_name, stemmed_sentence, OG_sent))
-
-			return sentences
-
-
-		except IOError:
-			print('Oops! File not found', file_path_and_name)
-			return [Sentence(file_path_and_name, [], [])]
 
 	def processFile(self, file_path_and_name):
 		try:
@@ -75,37 +32,42 @@ class Preprocessing(object):
 			text_1 = re.sub(r"\(AP\) _", " ", text_1)
 			text_1 = re.sub("&\w+;", " ", text_1)
 
-			sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-			lines = sent_tokenizer.tokenize(text_1.strip())
+			# lines = sent_tokenizer.tokenize(text_1.strip())
 
-			index = lines[0].find("--")
-			if index != -1:
-				lines[0] = lines[0][index + 2:]
-			index = lines[0].find(" _ ")
-			if index != -1:
-				lines[0] = lines[0][index + 3:]
-			sentences = []
+			sents = sent_tokenize(text_1.strip())
+			sents = [word_tokenize(item, format='text') for item in sents]
+			sentences = [Sentence(file_path_and_name, item, item) for item in sents]
 
-			for sent in lines:
-				sent = sent.strip()
-				OG_sent = sent[:]
-				sent = sent.lower()
-				line = nltk.word_tokenize(sent)
 
-				stemmed_sentence = [porter.stem(word) for word in line]
-				stemmed_sentence = list(filter(lambda x: x != '.' and x != '`' and x != ',' and x != '_' and x != ';'
-														 and x != '(' and x != ')' and x.find('&') == -1
-														 and x != '?' and x != "'" and x != '!' and x != '''"'''
-														 and x != '``' and x != '--' and x != ':'
-														 and x != "''" and x != "'s", stemmed_sentence))
 
-				# stemmed_sentence = [word for word in stemmed_sentence if word not in stopwords.words('english')]
+			# index = lines[0].find("--")
+			# if index != -1:
+			# 	lines[0] = lines[0][index + 2:]
+			# index = lines[0].find(" _ ")
+			# if index != -1:
+			# 	lines[0] = lines[0][index + 3:]
+			# sentences = []
 
-				if (len(stemmed_sentence) <= 4):
-					continue
+			# for sent in lines:
+			# 	sent = sent.strip()
+			# 	OG_sent = sent[:]
+			# 	sent = sent.lower()
+			# 	line = nltk.word_tokenize(sent)
 
-				if stemmed_sentence:
-					sentences.append(Sentence(file_path_and_name, stemmed_sentence, OG_sent))
+			# 	stemmed_sentence = [porter.stem(word) for word in line]
+			# 	stemmed_sentence = list(filter(lambda x: x != '.' and x != '`' and x != ',' and x != '_' and x != ';'
+			# 											 and x != '(' and x != ')' and x.find('&') == -1
+			# 											 and x != '?' and x != "'" and x != '!' and x != '''"'''
+			# 											 and x != '``' and x != '--' and x != ':'
+			# 											 and x != "''" and x != "'s", stemmed_sentence))
+
+			# 	# stemmed_sentence = [word for word in stemmed_sentence if word not in stopwords.words('english')]
+
+			# 	if (len(stemmed_sentence) <= 4):
+			# 		continue
+
+			# 	if stemmed_sentence:
+			# 		sentences.append(Sentence(file_path_and_name, stemmed_sentence, OG_sent))
 
 			return sentences
 
