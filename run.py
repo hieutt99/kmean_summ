@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     doc_folders = os.listdir(root_directory + "Data/summ/Documents")
 
-    summarizer = Summarizer(n_clusters=20
+    summarizer = Summarizer(n_clusters=10
                             , len_summary=16)
 
     parser = argparse.ArgumentParser()
