@@ -48,7 +48,7 @@ if __name__ == "__main__":
             if tmp[-1] not in clean_sents:
                 clean_sents.append(tmp[:-1])
 
-        progress_bar.set_postfix(f'Processing {path} with n_sents={len(text_sents)}')
+        progress_bar.set_postfix_str(f'Processing {path} with n_sents={len(text_sents)}')
         summary = summarizer.summary(sentences, text_sents, org_sents, last_indexs)
 
         path = os.path.join(path_to_save, f"{folder}.txt")
