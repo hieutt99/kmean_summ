@@ -26,7 +26,7 @@ if __name__ == "__main__":
         os.makedirs(path_to_save)
 
     for folder in doc_folders:
-        path = os.path.join(root_directory,"Data", "summ," "Documents", folder)
+        path = os.path.join(root_directory,"Data", "summ", "Documents", folder)
         print (path)
 
         sentences, last_indexs = Preprocessing().openDirectory(path)
